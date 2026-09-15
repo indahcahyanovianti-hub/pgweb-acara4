@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaflet JS</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Container Peta -->
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        // Inisialisasi Peta
+        var map = L.map("map").setView([-6.1753924, 106.8271528], 13);
+
+        // Definisi Base Maps
+        var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
+
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+
+        var rupabumiindonesia = L.tileLayer('https://geoservices.big.go.id/rbi/rest/services/BASEMAP/Rupabumi_Indonesia/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Badan Informasi Geospasial'
+        });
+
+        var Google_Roadmap = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ["mt0", "mt1", "mt2", "mt3"],
+            attribution: 'Google Maps'
+        });
+
+        var Google_Satellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ["mt0", "mt1", "mt2", "mt3"],
+            attribution: 'Google Maps'
+        });
+
+        var Google_Terrain = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ["mt0", "mt1", "mt2", "mt3"],
+            attribution: 'Google Maps'
+        });
+
+        // Menampilkan basemap default ke peta
+        Google_Roadmap.addTo(map);
+
+        // Objek Control Layer
+        var baseMaps = {
+            "Google Roadmap": Google_Roadmap,
+            "Google Satellite": Google_Satellite,
+            "Google Terrain": Google_Terrain,
+            "OpenStreetMap": osm,
+            "Esri World Imagery": Esri_WorldImagery,
+            "Rupa Bumi Indonesia": rupabumiindonesia
+        };
+
+        // Buat Marker dan tambahkan ke peta
+        var marker = L.marker([-6.1753924, 106.8271528]);
+        var marker2 = L.marker([-6.2184629, 106.8030739]);
+        var marker3 = L.marker([-6.2946531, 106.8976593]);
+
+        marker.addTo(map);
+        marker2.addTo(map);
+        marker3.addTo(map);
+
+        // Popup
+        marker.bindPopup("<b>Monumen Nasional</b><br>Monumen Nasional yang disingkat dengan Monas atau Tugu Monas adalah monumen peringatan setinggi 132 meter, terletak tepat di tengah Lapangan Medan Merdeka, Jakarta Pusat. Monas didirikan untuk mengenang perlawanan dan perjuangan rakyat Indonesia dalam merebut kemerdekaan dari pemerintahan kolonial Kerajaan Belanda.");
+        marker2.bindPopup("<b>Stadion Gelora Bung Karno</b><br>Stadion Utama Gelora Bung Karno atau lebih dikenal dengan nama Gelora Bung Karno (nama inisial & disingkat: SUGBK, GBK) adalah sebuah stadion yang terletak di Kelurahan Gelora, Kecamatan Tanah Abang, Jakarta Pusat dan merupakan bagian dari kompleks olahraga Gelanggang Olahraga Bung Karno. Stadion ini umumnya digunakan sebagai arena pertandingan sepak bola tingkat internasional. dan biasanya digunakan oleh Tim nasional sepak bola Indonesia dan klub Liga 1 Persija Jakarta.");
+
+        marker3.bindPopup("<b>Lubang Buaya</b><br>Lubang Buaya adalah sebuah kelurahan di Kecamatan Cipayung, Kota Jakarta Timur. Daerah ini dikenal sebagai lokasi pembunuhan tujuh perwira tentara Indonesia dalam upaya kudeta 1 Oktober yang dikenal sebagai Gerakan 30 September. Lubang Buaya terletak di pinggiran timur Jakarta dekat dengan Pangkalan Angkatan Udara Halim Perdanakusuma.");
+        marker3.openPopup();
+
+        // Tooltip
+        marker.bindTooltip("Jakarta");
+        marker2.bindTooltip("Jakarta Pusat");
+        marker2.openTooltip();
+        marker3.bindTooltip("Jakarta Timur");
+        marker3.openTooltip();
+
+        // Circle
+        var circle = L.circle([-6.3231896, 106.9139671], {
+            color: "red",
+            opacity: 1,
+            fillColor: "green",
+            fillOpacity: 0.5,
+            radius: 1000,
+        });
+
+        // Menambahkan circle ke dalam peta
+        circle.addTo(map);
+
+        // Popup Circle
+        circle.bindPopup("<b>Markas Besar Tentara Nasional Indonesia</b><br>Tentara Nasional Indonesia (disingkat TNI) adalah nama untuk angkatan bersenjata milik negara Indonesia. Pada awal dibentuk, lembaga ini bernama Badan Keamanan Rakyat Pembantoe Polisi Republik Indonesia, setelah itu menjadi Tentara Keamanan Rakyat (TKR), lalu TKR dibubarkan dan kemudian berdirilah Tentara Republik Indonesia (TRI), dan berganti nama menjadi Angkatan Bersenjata Republik Indonesia (ABRI). Kemudian setelah pemisahan antara militer dengan kepolisian maka diubah kembali menjadi Tentara Nasional Indonesia (TNI) hingga saat ini.");
+        circle.openPopup();
+
+        // Tooltip Circle
+        circle.bindTooltip("Tentara!", { sticky: true });
+        circle.openTooltip();
+
+        // Polyline (Menghubungkan Monas, GBK, Lubang Buaya, dan Mabes TNI)
+        var vertexPolyline = [
+            [-6.1753924, 106.8271528], // Monas
+            [-6.2184629, 106.8030739], // Gelora Bung Karno
+            [-6.2946531, 106.8976593], // Lubang Buaya
+            [-6.3231896, 106.9139671]  // Mabes TNI
+        ];
+
+        var polyline = L.polyline(vertexPolyline, {
+            color: "red",
+            weight: 3,
+            opacity: 1
+        });
+
+        // Tambahkan polyline ke peta
+        polyline.addTo(map);
+
+        // Popup & Tooltip Polyline
+        polyline.bindPopup("<b>Garis Polyline</b><br>Menghubungkan titik-titik lokasi penting di Jakarta.");
+        polyline.bindTooltip("Rute Polyline", { sticky: true });
+
+        // Polyline & Polygon Bintang Lima Sudut
+        var vertexPolygon = [
+            [-6.1400, 106.8271], // Puncak atas
+            [-6.1650, 106.8400], // Lembah kanan atas
+            [-6.1600, 106.8650], // Sayap kanan
+            [-6.1800, 106.8450], // Lembah kanan bawah
+            [-6.2050, 106.8600], // Kaki kanan
+            [-6.1900, 106.8271], // Lembah bawah (tengah)
+            [-6.2050, 106.7942], // Kaki kiri
+            [-6.1800, 106.8092], // Lembah kiri bawah
+            [-6.1600, 106.7892], // Sayap kiri
+            [-6.1650, 106.8142]  // Lembah kiri atas
+        ];
+
+        var polygon = L.polygon(vertexPolygon, {
+            color: "purple",     // Warna garis tepi
+            weight: 3,           // Ketebalan garis
+            opacity: 1,          // Opasitas garis tepi
+            fillColor: "yellow",   // Warna isian (hijau terang)
+            fillOpacity: 0.5     // Opasitas isian
+        });
+
+        // Menambahkan polygon bintang ke dalam peta
+        polygon.addTo(map);
+
+        // Popup & Tooltip Polygon
+        polygon.bindPopup("<b>Area Poligon Bintang</b><br>Poligon berbentuk bintang di wilayah Jakarta.");
+        polygon.bindTooltip("Poligon Bintang", { sticky: true });
+
+        // Objek Overlay Maps (ditambahkan Mabes TNI)
+        var overlayMaps = {
+            "Monas": marker,
+            "Gelora Bung Karno": marker2,
+            "Lubang Buaya": marker3,
+            "Mabes TNI": circle,
+            "Line": polyline,
+            "Polygon": polygon
+        };
+
+        // Inisialisasi dan tampilkan Control Layer
+        var controllayer = L.control.layers(baseMaps, overlayMaps, { collapsed: true });
+        controllayer.addTo(map);
+
+        // Scale
+        var scale = L.control.scale();
+        scale.addTo(map);
+        scale.setPosition("bottomright");
+
+    </script>
+</body>
+
+</html>
